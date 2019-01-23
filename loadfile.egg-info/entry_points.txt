@@ -1,0 +1,4 @@
+
+        [console_scripts]
+        loadfile=loadfile:loadfile
+    

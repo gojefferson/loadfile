@@ -1,0 +1,8 @@
+loadfile.py
+setup.py
+loadfile.egg-info/PKG-INFO
+loadfile.egg-info/SOURCES.txt
+loadfile.egg-info/dependency_links.txt
+loadfile.egg-info/entry_points.txt
+loadfile.egg-info/requires.txt
+loadfile.egg-info/top_level.txt
