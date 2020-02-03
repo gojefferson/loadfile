@@ -14,21 +14,29 @@ init_colorama()
 
 ASCII_MATCH = re.compile("[a-zA-Z0-9]")
 
-
-def get_encoding(filepath):
+def get_encoding(filepath) -> str:
     with open(filepath, "rb") as readfile:
         raw = readfile.read()
     det = chardet.detect(raw)
     return det["encoding"]
 
 
-def get_lines(filepath, encoding):
+def get_lines(filepath, encoding) -> List[str]:
     try:
         with open(filepath, encoding=encoding, errors="backslashreplace") as txt_file:
-            lines = list(txt_file.readlines())
+            lines: List[str] = list(txt_file.readlines())
         return lines
     except UnicodeDecodeError as e:
         click.echo(f"Error decoding {filepath}: {e}")
+    raise Exception("Could not parse file")
+
+
+def remove_empty_lines(lines):
+    new_lines = []
+    for line in lines:
+        if len(line) > 1:
+            new_lines.append(line)
+    return new_lines
 
 
 def get_rows(lines):
@@ -39,6 +47,8 @@ def get_rows(lines):
         new_line = [i.strip("þ\n") for i in new_line]
         new_lines.append(new_line)
     cell_per_line = len(new_lines[0])
+    assert cell_per_line > 1
+    new_lines = remove_empty_lines(new_lines)
     assert all([len(l) == cell_per_line for l in new_lines])
 
     fields = new_lines[0]
